@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find it</title>
+    <link rel="icon" href="images/ICON.png">
+    <link rel="stylesheet" href="css/AG.css">
+    <!-- Font awsome  استدعاء ايكونز-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            background-image: url(images/back1.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Start HEADER-->
+    <header>
+        <div id="navbar">
+            <a href="#"> <img src="images/find it.png"></a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="htmlStaticFiles/InvestenationPage/investigations.html">Investigation </a></li>
+                    <!-- <li><a href="manger.html">Manger</a></li> -->
+                    <li id="manager-link">
+                        <a href="/htmlStaticFiles/Registeration Pages/manger.html">Manager</a>
+                    </li>
+                    <li id="auth-item">
+                        <a href="" id="auth-link">Login</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="contant">
+            <h1> Welcome To <span class="primary-text">Find It</span> Website </h1>
+            <p>Here you can find your losting things in every where or every street </p>
+            <a href="htmlStaticFiles/Find Pages/FindOrLost.html" class="btn btn-primary">Click Here to Find your
+                Lost!</a> <!-- 2 class-->
+        </div>
+    </header>
+    <!-- END HEADER-->
+
+    <!--Statr About section-------------------------------------------->
+    <main>
+        <section id="about">
+            <div class="container">
+
+                <div class="title">
+                    <h2> About Our Website</h2>
+                    <p> The idea of the site and the services it provides</p>
+                </div>
+                <div class="about-content">
+                    <div>
+                        <p> Welcome to Find It, a website where you can easily find your lost items anywhere and also
+                            communicate with the person who found them.
+                        </p>
+                        <br>
+                        <p>In another case, if you find something, you can also upload it to the site to find its owner.
+                        </p>
+                        <a href="#" class="btn btn-secondary"> Learn More</a>
+                    </div>
+                    <img src="images/about11111.png" alt="about">
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- End of about Section---------------------->
+
+
+    <!-- Gallery Section Start -->
+    <section id="gallery">
+
+        <div class="container">
+            <h2>Our Website Gallery</h2>
+            <div class="img-gallery">
+                <img src="./images/gallery1.jpeg" alt="gallery1">
+                <img src="./images/gallery2.jpeg" alt="gallery2">
+                <img src="./images/gallery3.webp" alt="gallery3">
+                <img src="./images/gallery4.jpeg" alt="gallery4">
+                <img src="./images/gallery5.jpeg" alt="gallery5">
+                <img src="./images/gallery6.jpg" alt="gallery6">
+            </div>
+        </div>
+    </section>
+    <!-- Gallery Section End ----------------------------------------->
+
+    <!-- Contact Section Start -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info"> <!-- (1)div  -->
+                    <div>
+                        <h3>Contact Us</h3>
+                        <p><i class="fa-solid fa-location-dot"></i>Asuit, City Square, Egypt</p>
+                        <p><i class="fa-solid fa-phone"></i>Phone: 0884548602</p>
+                        <p><i class="fa-solid fa-envelope"></i>support@find_it.com</p>
+                    </div>
+                    <div>
+                        <h3>LOST & Found Things</h3>
+                        <a href="htmlStaticFiles/Find Pages/FindChoose.html">
+                            <p> <u>Find an item</u> </p>
+                        </a>
+                        <a href="htmlStaticFiles/Lost Pages/LostChoose.html">
+                            <p> <u>Lost an item</u></p>
+                        </a>
+                    </div>
+                    <div>
+                        <h3>FOLLOW US</h3>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <form> <!-- (2)form  -->
+                    <input type="text" name="Name" id="name" placeholder="Full Name" required>
+                    <input type="email" name="Email" id="email" placeholder="Email Address" required>
+                    <input type="text" name="subject" id="subject" placeholder="Subject">
+                    <textarea name="Message" id="mesage" cols="30" rows="5" placeholder="Enter your message ....."
+                        style="resize: none;overflow-y: hidden;"></textarea>
+                    <button type="submit" class="btn btn-third"><b>SEND MESSAGE</b></button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+    </main>
+    <!-- Start FOOTERRRRRR-->
+    <footer id="footer">
+        <p>Copyright &copy; 2025 All rights reserved | made by <b> Team Find it</b></p>
+    </footer>
+    <!-- END FOOTERRRRRR-->
+
+    <script src="js/project.js"></script>
+
+</body>
+
+</html>
