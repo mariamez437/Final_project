@@ -1,0 +1,31 @@
+{
+  "losted": [
+    {
+      "name": "Abanoub",
+      "national_id": "123456789123456",
+      "governorate": "minia",
+      "city": "minia",
+      "street": "minia",
+      "contact": "01224764601",
+      "image_url": "http://localhost:2000/static/lostedcard/LostedPhoto1"
+    },
+    {
+      "name": "Abanoub",
+      "national_id": "123456789123456",
+      "governorate": "minia",
+      "city": "minia",
+      "street": "minia",
+      "contact": "01224764601",
+      "image_url": "http://localhost:2000/static/lostedcard/LostedPhoto1"
+    },
+    {
+      "name": "mariam",
+      "national_id": "30301162501881",
+      "governorate": "assuit",
+      "city": "assuit",
+      "street": "nasr-street",
+      "contact": "01210569200",
+      "image_url": "http://localhost:2000/static/lostedcard/mariamphoto.jpg"
+    }
+  ]
+}

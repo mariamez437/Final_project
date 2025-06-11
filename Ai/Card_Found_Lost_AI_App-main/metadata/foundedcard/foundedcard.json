@@ -1,0 +1,49 @@
+{
+  "founded": [
+    {
+      "name": "Maged",
+      "national_id": "12345678912345",
+      "governorate": "minia",
+      "city": "minia",
+      "street": "minia",
+      "contact": "01224764601",
+      "image_url": "http://localhost:2000/static/foundedcard/FoundePhotoName"
+    },
+    {
+      "name": "Maged",
+      "national_id": "12345678912345",
+      "governorate": "minia",
+      "city": "minia",
+      "street": "minia",
+      "contact": "01224764601",
+      "image_url": "http://localhost:2000/static/foundedcard/FoundePhotoName"
+    },
+    {
+      "name": "abanob",
+      "national_id": "12345678912345",
+      "governorate": "minia",
+      "city": "minia",
+      "street": "minia",
+      "contact": "01224764601",
+      "image_url": "http://localhost:2000/static/foundedcard/ImgaFinalAdddd.jpg"
+    },
+    {
+      "name": "mariam",
+      "national_id": "30301162501881",
+      "governorate": "assuit",
+      "city": "assuit",
+      "street": "nasr",
+      "contact": "01210569200",
+      "image_url": "http://localhost:2000/static/foundedcard/string.jpg"
+    },
+    {
+      "name": "مريم",
+      "national_id": "30301162501881",
+      "governorate": "اسيوط",
+      "city": "اسيوط",
+      "street": "اسيوط",
+      "contact": "01210569200",
+      "image_url": "http://localhost:2000/static/foundedcard/mariamphoto.jpg"
+    }
+  ]
+}
