@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lost Phone Form</title>
+    <link rel="stylesheet" href="../../css/cardForm.css" />
+    <link
+      rel="shortcut icon"
+      href="../../icons/data-entry.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="../../bootstrap-5.3.3-dist/css/bootstrap.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+
+  <body>
+    <main class="container d-flex flex-column mb-5">
+      <!-- HEADER -->
+      <header class="m-5">
+        <div id="navbar">
+          <a href="../../index.html"> <img src="../../images/find it.png" /></a>
+        </div>
+      </header>
+
+      <section class="row">
+        <div class="text-center mb-5">
+          <h2 class="text-secondary">Lost Phone Form</h2>
+        </div>
+
+        <div class="text-center mb-5">
+          <h2>Enter <span class="bold">your Phone</span> Details...</h2>
+        </div>
+
+        <form
+          action="#"
+          class="container d-flex flex-row justify-content-evenly"
+          id="lost-phone-form"
+          enctype="multipart/form-data"
+        >
+          <div class="col-5 d-flex flex-column gap-3">
+            <div class="mb-3">
+              <label for="serial_number" class="form-label"
+                >Phone Serial No</label
+              >
+              <input
+                type="text"
+                placeholder="Please Enter your Phone Serial No"
+                id="serial_number"
+                class="form-control"
+              />
+              <span
+                class="text-danger error-msg"
+                id="err_serial_number_id"
+              ></span>
+            </div>
+
+            <div class="mb-3">
+              <label for="brandID" class="form-label">Brand</label>
+              <select
+                name="brandName"
+                id="brandID"
+                class="list-group p-2 w-100"
+              >
+                <option disabled selected>Select Mobile Phone Brand</option>
+                <option value="Samsung">Samsung</option>
+                <option value="Apple">Apple</option>
+                <option value="Huawei">Huawei</option>
+                <option value="Xiaomi">Xiaomi</option>
+                <option value="Sony">Sony</option>
+                <option value="Infinix">Infinix</option>
+                <option value="Realme">Realme</option>
+                <option value="Redmi">Redmi</option>
+                <option value="Oppo">Oppo</option>
+                <option value="Nokia">Nokia</option>
+              </select>
+              <span class="text-danger error-msg" id="err_brandName_id"></span>
+            </div>
+
+            <div class="mb-3">
+              <label for="color" class="form-label">Phone Color</label>
+              <select name="pColor" id="color" class="list-group p-2 w-100">
+                <option disabled selected>Select Mobile Phone Color</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Gold">Gold</option>
+                <option value="Salver">Salver</option>
+              </select>
+              <span class="text-danger error-msg" id="err_color_id"></span>
+            </div>
+
+            <h3 class="bold">Where your Lost your Phone?</h3>
+            <div class="mb-3">
+              <label class="form-label" for="government">Government</label>
+              <input
+                type="text"
+                id="government"
+                placeholder="Please Enter your Government"
+                class="form-control"
+              />
+              <span class="text-danger error-msg" id="err_government"></span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="center">City</label>
+              <input
+                type="text"
+                id="center"
+                placeholder="Please Enter your City"
+                class="form-control"
+              />
+              <span class="text-danger error-msg" id="err_center"></span>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="street">Street</label>
+              <input
+                type="text"
+                id="street"
+                placeholder="Please Enter your Street"
+                class="form-control"
+              />
+              <span class="text-danger error-msg" id="err_street"></span>
+            </div>
+
+            <button class="btn btn-danger" type="submit">Submit</button>
+          </div>
+
+          <div>
+            <div class="upload-sectionPhone mb-5">
+              <div
+                class="upload-text fw-bolder"
+                onclick="document.getElementById('fileInput').click();"
+              >
+                <img
+                  src="../../images/Hand-Holding-Smartmobile-Phone-Cartoon-Graphics-64594596-1.jpg"
+                  alt="Card Image"
+                  id="preview"
+                />
+                <p class="text-center mt-2 text-dark">⬆ Upload Image</p>
+              </div>
+              <input
+                type="file"
+                id="fileInput"
+                style="display: none"
+                accept="image/*"
+                onchange="previewImage(event)"
+              />
+              <span class="text-danger error-msg" id="err_fileInput"></span>
+            </div>
+
+            <div class="mt-5">
+              <h3 class="h2">Way to communicate</h3>
+              <div class="mb-3">
+                <label class="form-label" for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Please Enter your Email"
+                  class="form-control"
+                />
+                <span class="text-danger error-msg" id="err_email"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Toast container will be appended here -->
+    <div
+      id="toast-container"
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+    ></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript الخاص بالإرسال -->
+    <script src="../../js/lost_phone.js"></script>
+    <script>
+      function previewImage(event) {
+        const imgElement = document.getElementById("preview");
+        imgElement.src = URL.createObjectURL(event.target.files[0]);
+      }
+    </script>
+  </body>
+</html>

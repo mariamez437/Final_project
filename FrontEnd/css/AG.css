@@ -1,0 +1,317 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: "Quicksand", sans-serif;
+}
+
+ul{
+    list-style: none;  /* النقاط اللى جنب القائمة الغير مرتبة */
+}
+
+a{
+    text-decoration: none;  /* شال الخط اللى تحت اللينك */ 
+}
+.container{
+    max-width: 1100px;
+    margin: auto;
+}
+/*----------------------------------------------------*/
+/* uility classes*/  /* classes name that more used*/ 
+.primary-text {
+    color: red;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px; 
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    }
+    
+    .btn-primary{
+        color: beige;
+        border: 2px solid #fff;
+    }
+
+    .btn-secondary{
+        color:#fff;
+        background-color: #383848;
+        margin-top: 2rem;
+    }
+
+    .btn-secondary:hover{
+        transform:scale(0.8) ;
+        transition: all 0.3s ease;
+    }
+/*____
+________________________________________________*/
+/*START Header*/
+
+header {
+    height: 100vh; /*أفقى*/
+    background: url();
+    position: relative;
+    }
+
+#navbar {
+    display: flex;        /*  اللينكات جنب اللوجو مش تحته*/
+    justify-content: space-between; /*مسافة بين اللينكات و اللوجو */
+    align-items: center;   /* خلى اللينكات فى النص */
+    height: 82px;
+    width: 100%;
+    position: sticky;
+}
+
+#navbar img {
+    width: 120px;
+    margin-left: 100px;
+    margin-top: 40px;
+}
+
+nav ul {
+    display: flex;   /*خلى اللينكات جنب بعض فردهم بدل ما كانوا تحت بعض فى القائمة*/
+    margin-right: 100px;
+    
+}
+
+nav ul li a {
+    padding: 15px 20px;  /*مسافة بين ال لينكات */
+    font-weight: 800;
+    font-size: 20px;
+    color: beige;
+    
+}
+
+nav ul li a:hover {
+    color: #e4b95b;
+}
+
+header .contant{
+    display: flex;
+    flex-direction: column; /*الكلام ميبقاش تحت بعض*/
+    align-items: center;
+    justify-content: center;
+    height: 75%; /* Add exmple of greeen background */
+    
+}
+
+header .contant h1 {
+    font-size: 40px;
+    color: white;
+}
+
+
+header .contant p {
+    font-size: 25px;
+    color: white;
+    font-weight: 500px;
+    margin: 20px 0 40px;
+}
+
+header .contant a {
+    font-size: 30px;
+    font-weight: bold;
+    color: beige;
+}
+
+header .contant a:hover{
+    color:#383848;
+    background-color: #e4b95b;
+    
+}
+
+header::before {   /* عنصر مزيف*/
+    content: "";
+    width: 100%;  /* تفطية كاملة للعنصر */ 
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgb(0, 0, 0, 0.6);
+    }
+
+    header *{
+        z-index: 10;
+    }
+    /*End Header________________________________________________*/
+
+
+    /* start of about section*/
+#about{
+    height: 88vh; /* شيل*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+#about .title{
+        text-align: center;
+        margin-bottom: 4 rem;
+        }
+
+    #about h2{
+        font-size: 40px;
+        color: #383848;
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 3px rgb(05, 0, 0 , 0.2);
+    }
+
+    #about .title p{
+        font-size: 15px;
+        color:black ;
+        font-weight:600 ;
+        text-align: center;
+        margin-top: 0.5;
+        margin-bottom: 20px;
+    }
+
+    #about .about-content{
+        display: flex;
+        justify-content: space-between;   
+    }
+
+    #about .about-content img{
+        max-width:450px ;   
+    }
+    #about .about-content img:hover{
+        transform:scale(1.3) ;
+        transition: all 0.8s ease;  
+    }
+
+    #about .about-content p{
+        color: #9a9a9a;
+        font-weight: 500;
+        margin-right: 7rem;
+        line-height: 1.6;  
+    }
+
+    #about .about-content a {
+        margin-top: 2rem;
+        }
+
+    /* EEEENNNDD About section */
+
+        /* start gallery*/
+        #gallery{
+            background: url(../images/offer-background.jpg);
+            padding: 8rem 0 6rem;
+
+        }
+        #gallery .img-gallery img{
+            margin: 20px;
+            width: 280px;
+            height: 200px;
+            border-radius: 15px;
+            opacity: 0.8;
+        }
+        #gallery .img-gallery img:hover {
+            opacity: 1.3; 
+            transform: scale(1.1); /*للتكبير*/
+            transition: transform 1s ease-out;  /*بالتدريجى */
+        }
+        #gallery .img-gallery {
+            display: flex; /* يتيح ترتيب العناصر بداخله بشكل مرن.*/
+            justify-content: center; /* يضبط محاذاة العناصر أفقيًا في المنتصف */
+            align-items: center; /*يضبط محاذاة العناصر عموديًا في المنتصف */
+            flex-wrap: wrap; /* لو السطر مكفاش بالنسبة للطول والعرض الصوره تنزل صف جديد من تحت*/
+        }
+        #gallery h2{
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+        /* enddd gallery*/
+
+        /* Start contant----------------------*/
+        #contact {
+            background: #f4f2ed;
+            padding: 5rem 0;
+            }
+        #contact .container {    /*class(1)*/
+            max-width: 900px;
+            }
+        #contact .contact-content {  /*class(2)*/
+                display: flex; /*توزيع العناصر الفرعية بطريقة منظمة.*/
+                justify-content: space-evenly; /*يوزع العناصر الفرعية بشكل متساوٍ داخل الحاوية*/
+                align-items: center; /*جعل العناصر الفرعية تتمركز عموديًا في منتصف الحاوية.*/
+                }    
+        #contact .contact-info{      /*class(3)*/
+            width: 50% ;
+        }
+        #contact .contact-info div{
+            margin: 30px 0;
+            line-height: 1.7;
+        }
+        #contact .contact-info  h3{
+            font-size: 28px;
+            color: #383848;
+            margin-bottom: 10px;
+        }
+        #contact .contact-info p{
+            color: #9a9a9a;  
+        }
+        #contact .contact-info p i {
+            color: #383848;
+            margin-right: 5px;
+        }
+        #contact .contact-info p i:hover{
+            color: #e4b95b;
+        }
+        #contact .contact-info a i{
+            color: #fff;
+            background: #383848;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 50%;  
+        }
+        #contact .contact-info a i:hover{
+            background-color: #e4b95b;
+            color: #383848; 
+        }
+
+        form {
+            width: 50%;
+        }
+        form input, textarea{
+            display: block;
+            width: 100%;
+            padding: 20px 15px;/*التعبئة هي المسافة الداخلية بين محتوى العنصر وحدوده*/
+            margin: 20px 0; /* top rightإبعاد العنصر عن العناصر المجاورة*/    
+            border: none;
+            background-color: #e3e2dd;
+        }
+        #contact .btn {
+        background-color: #e4b95b;
+        color: #383848;
+        }
+        #contact .btn:hover {
+            background-color: #e4b95b;
+            color: #fff;
+            background-color: #383848;
+            }
+        /* enddd contant--------------------*/
+
+        /* start Foote_______________*/
+        #footer {
+            background-color: #383848;
+            text-align: center;
+            color: #fff;
+            padding: 15px 0;
+            font-size: 14px;
+        }
+        /* End Foote_______________*/
+
+        /* Responsiveness $$$$$$$$$$$$$$$$$  لسه جزء المقاساااات */ 
+        

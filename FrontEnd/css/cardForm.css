@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    /* background-color: #383848 !important; */
+    background-color: #f7f5f2 !important;
+    /* color: white !important; */
+}
+
+/* Header css */
+
+#navbar {
+    display: flex;
+    height: 82px;
+    width: 100%;
+    position: sticky;
+    justify-content: center;
+    align-items: center;
+}
+
+#navbar img {
+    width: 120px;
+    margin-top: 70px;
+}
+
+header * {
+    z-index: 10;
+}
+
+/* End header */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h2 {
+    font-size: 22px;
+}
+
+input {
+    width: 250px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-section img {
+    width: auto;
+    height: 16rem;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.upload-sectionPhone img {
+    width: 100%;
+    height: 23rem;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.upload-text {
+    font-size: 14px;
+    margin-top: 8px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.submit-btn {
+    background-color: red;
+    width: 130px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#link {
+    color: #bfbaae;
+}
+
+#link:hover {
+    color: #8a857b;
+}
