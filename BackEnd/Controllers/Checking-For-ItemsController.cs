@@ -168,15 +168,16 @@ namespace Lost_and_Found.Controllers
             await file.CopyToAsync(ms);
             return ms.ToArray();
         }
-        //public IFormFile ByteArrayToIFormFile(byte[] fileBytes, string fileName)
-        //{
-        //    var stream = new MemoryStream(fileBytes);
-        //    IFormFile file = new FormFile(stream, 0, fileBytes.Length, "name", fileName)
-        //    {
-        //        Headers = new HeaderDictionary(),
-        //        ContentType = "image/jpeg" 
-        //    };
-        //    return file;
-        //}
+        
+        public IFormFile ByteArrayToIFormFile(byte[] fileBytes, string fileName)
+        {
+           var stream = new MemoryStream(fileBytes);
+           IFormFile file = new FormFile(stream, 0, fileBytes.Length, "name", fileName)
+           {
+               Headers = new HeaderDictionary(),
+               ContentType = "image/jpeg" 
+           };
+           return file;
+        }
     }
 }
