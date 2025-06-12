@@ -109,56 +109,56 @@ namespace Lost_and_Found.Controllers
         
 
 
-        //[HttpPost("matchPhone")]
-        //public async Task<IActionResult> MatchPhone(string email)
-        //{
-        //    List<LostPhone> lostPhones = phone_service.GetLostPhonesOfEmail(email);
+        [HttpPost("matchPhone")]
+        public async Task<IActionResult> MatchPhone(string email)
+        {
+           List<LostPhone> lostPhones = phone_service.GetLostPhonesOfEmail(email);
 
-        //    List<LostMa> lostPhoneDtos = lostPhones.Select(phone => new LostPhoneDto
-        //    {
-        //        Id = phone.Id,
-        //        PhoneID = phone.PhoneID,
-        //        PhonePhotoBase64 = Convert.ToBase64String(phone.PhonePhoto), // لو صورة باينري
-        //        Brand = phone.Brand,
-        //        Model = phone.Model,
-        //        Description = phone.Description
-        //    }).ToList();
+           List<LostMa> lostPhoneDtos = lostPhones.Select(phone => new LostPhoneDto
+           {
+               Id = phone.Id,
+               PhoneID = phone.PhoneID,
+               PhonePhotoBase64 = Convert.ToBase64String(phone.PhonePhoto), // لو صورة باينري
+               Brand = phone.Brand,
+               Model = phone.Model,
+               Description = phone.Description
+           }).ToList();
 
-        //    var url = "http://localhost:9000/match/";
-        //    using var client = new HttpClient();
+           var url = "http://localhost:9000/match/";
+           using var client = new HttpClient();
 
-        //    foreach (var lostPhoneDto in lostPhoneDtos)
-        //    {
-        //        var jsonData = new
-        //        {
-        //            match_type = "image",
-        //            lost_image = lostPhoneDto.PhonePhotoBase64
-        //        };
+           foreach (var lostPhoneDto in lostPhoneDtos)
+           {
+               var jsonData = new
+               {
+                   match_type = "image",
+                   lost_image = lostPhoneDto.PhonePhotoBase64
+               };
 
-        //        var jsonString = System.Text.Json.JsonSerializer.Serialize(jsonData);
-        //        var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+               var jsonString = System.Text.Json.JsonSerializer.Serialize(jsonData);
+               var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-        //        try
-        //        {
-        //            var response = await client.PostAsync(url, content);
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                var responseBody = await response.Content.ReadAsStringAsync();
-        //                Console.WriteLine($"Response for PhoneID {lostPhoneDto.PhoneID}: {responseBody}");
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine($"Error for PhoneID {lostPhoneDto.PhoneID}: {response.StatusCode}");
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine($"Exception for PhoneID {lostPhoneDto.PhoneID}: {ex.Message}");
-        //        }
-        //    }
+               try
+               {
+                   var response = await client.PostAsync(url, content);
+                   if (response.IsSuccessStatusCode)
+                   {
+                       var responseBody = await response.Content.ReadAsStringAsync();
+                       Console.WriteLine($"Response for PhoneID {lostPhoneDto.PhoneID}: {responseBody}");
+                   }
+                   else
+                   {
+                       Console.WriteLine($"Error for PhoneID {lostPhoneDto.PhoneID}: {response.StatusCode}");
+                   }
+               }
+               catch (Exception ex)
+               {
+                   Console.WriteLine($"Exception for PhoneID {lostPhoneDto.PhoneID}: {ex.Message}");
+               }
+           }
 
-        //    return Ok(lostPhoneDtos);
-        //}
+           return Ok(lostPhoneDtos);
+        }
         private async Task<byte[]?> ConvertFormFileToBytesAsync(IFormFile? file)
         {
             if (file == null)
