@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+transformers
+torch
+Pillow
+faiss-cpu
+sentence-transformers
+deep-translator
+langdetect
+jinja2
