@@ -36,7 +36,6 @@ namespace Lost_and_Found.Services
                 {
                     ret.Add(new
                     {
-                        Found_Phone = item.PhoneNumber,
                         Founder_Email = con.FindPhones.FirstOrDefault(o => o.Brand == item.Brand)?.FinderEmail
                     });
                     

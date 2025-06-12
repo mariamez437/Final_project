@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost Item Accuracy Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="file"],
+    input[type="email"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      margin-top: 10px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .match-image {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Lost Item Accuracy Checker</h2>
+
+    <!-- Phone Photo Upload -->
+    <div class="field">
+      <label for="phonePhoto">Upload Phone Photo:</label>
+      <input type="file" id="phonePhoto" accept="image/*">
+      <button onclick="checkPhoneAccuracy()">Check Phone Accuracy</button>
+      <div class="result" id="phoneResult"></div>
+    </div>
+
+    <!-- Card Photo Upload -->
+    <div class="field">
+      <label for="cardPhoto">Upload Card Photo:</label>
+      <input type="file" id="cardPhoto" accept="image/*">
+      <button onclick="checkCardAccuracy()">Check Card Accuracy</button>
+      <div class="result" id="cardResult"></div>
+    </div>
+
+    <!-- Email Input -->
+    <div class="field">
+      <label for="email">Enter your Email to Get All Losts:</label>
+      <input type="email" id="email" placeholder="your@email.com">
+      <button onclick="submitEmail()">Submit Email</button>
+      <div class="result" id="emailResult"></div>
+    </div>
+  </div>
+
+  <script>
+    async function checkPhoneAccuracy() {
+      const fileInput = document.getElementById('phonePhoto');
+      const resultDiv = document.getElementById('phoneResult');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        resultDiv.textContent = 'Please upload a phone photo first.';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);  // اسم الحقل في backend
+
+      try {
+        const response = await fetch('http://localhost:9000/match/', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+        const data = await response.json();
+
+        let html = `<strong>Phone match:</strong> ${data.matched ? 'Matched ✅' : ''}<br>`;
+        html += `<strong>Similarity:</strong> ${data.image_similarity}<br><br>`;
+
+        const serverURL = "http://localhost:9000"; // نضيف الرابط الكامل للسيرفر
+
+        if (Array.isArray(data.matched_images) && data.matched_images.length > 0) {
+          html += `<strong>Top Matches:</strong><br>`;
+          data.matched_images.forEach((img, index) => {
+            html += `
+              <div style="margin-bottom: 10px;">
+                <img src="${serverURL + img.image_url}" alt="match ${index + 1}" width="100" class="match-image"><br>
+                Similarity: ${img.similarity}<br>
+                Contact: ${img.contact_info?.phone || img.contact_info?.email || 'N/A'}
+              </div>
+            `;
+          });
+        }
+
+        resultDiv.innerHTML = html;
+      } catch (error) {
+        resultDiv.textContent = 'Error uploading phone photo.';
+        console.error(error);
+      }
+    }
+
+    async function checkCardAccuracy() {
+      const fileInput = document.getElementById('cardPhoto');
+      const resultDiv = document.getElementById('cardResult');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        resultDiv.textContent = 'Please upload a card photo first.';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const response = await fetch('http://localhost:9000/match/', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+        const data = await response.json();
+
+        resultDiv.textContent = `Card match: ${data.matched ? 'Matched ✅' : ''}`;
+      } catch (error) {
+        resultDiv.textContent = 'Error uploading card photo.';
+        console.error(error);
+      }
+    }
+
+    async function submitEmail() {
+      const emailInput = document.getElementById('email');
+      const resultDiv = document.getElementById('emailResult');
+      const email = emailInput.value;
+
+      if (!email || !email.includes('@')) {
+        resultDiv.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://localhost:7043/api/Checking_For_Items/get-all-items?email=${encodeURIComponent(email)}`, {
+          method: 'GET'
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          resultDiv.textContent = `Error: ${response.status} ${response.statusText}`;
+          console.error('Server error:', errorText);
+          return;
+        }
+
+        const data = await response.json();
+
+        resultDiv.textContent = Array.isArray(data)
+          ? `Found ${data.length} item(s): ${JSON.stringify(data)}`
+          : data.message || JSON.stringify(data);
+
+      } catch (error) {
+        resultDiv.textContent = 'Could not reach the server. See console.';
+        console.error('Fetch error:', error);
+      }
+    }
+  </script>
+</body>
+</html>

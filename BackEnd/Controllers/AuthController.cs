@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using Lost_and_Found.Interfaces;
 using Lost_and_Found.Models.DTO;
+using Lost_and_Found.Models.DTO.MobileCheckDto;
 using Lost_and_Found.Models.Entites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Lost_and_Found.Controllers
 {
@@ -52,5 +56,45 @@ namespace Lost_and_Found.Controllers
 
             return Ok(res);
         }
+     
+
+        [HttpPost("request-reset-code")]
+        public async Task<IActionResult> RequestResetCode([FromBody] PasswordResetRequestDTO dto)
+        {
+            var user = await authserver.FindByEmailAsync(dto.Email);
+            if (user == null)
+                return Ok("If this email exists, a code will be sent.");
+
+            var code = new Random().Next(100000, 999999).ToString();
+
+            await authserver.SaveCodeAsync(dto.Email, code);
+            await authserver.SendEmailAsync(dto.Email, "Password Reset Code", $"Your reset code is: {code}");
+
+            return Ok("A reset code has been sent to your email.");
+        }
+
+        [HttpPost("reset-password-with-code")]
+        public async Task<IActionResult> ResetPasswordWithCode([FromBody] ResetPasswordWithCodeDto dto)
+        {
+            var isValid = await authserver.ValidateCodeAsync(dto.Email, dto.Code);
+            if (!isValid)
+                return BadRequest("Invalid or expired code.");
+
+            var user = await authserver.FindByEmailAsync(dto.Email);
+            if (user == null)
+                return BadRequest("User not found.");
+
+            var token = await authserver.GeneratePasswordResetTokenAsync(user);
+            var result = await authserver.ResetPasswordAsync(user, token, dto.NewPassword);
+
+     
+
+            await authserver.DeleteCodeAsync(dto.Email);
+
+            return Ok("Password has been reset successfully.");
+        }
+
+
+
     }
 }

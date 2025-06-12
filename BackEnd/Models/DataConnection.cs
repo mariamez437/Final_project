@@ -15,14 +15,10 @@ namespace Lost_and_Found.Models
         public DbSet<FindCard> FindCards { get; set; }
         public DbSet<FindPhone> FindPhones { get; set; }
         public DbSet<Manager> Managers { get; set; }
+        public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder op)
-        {
-            base.OnConfiguring(op);
 
-            op.UseSqlServer("Server=LAPTOP-CMR1M1SF\\SQLDEV;Database=Lost-and-Found;Trusted_Connection=True; TrustServerCertificate=True");
-        }
 
         protected override void OnModelCreating(ModelBuilder op)
         {

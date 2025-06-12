@@ -5,10 +5,10 @@ namespace Lost_and_Found.Models.DTO.CheckDto
     public class FaceImagesDto
     {
         [JsonProperty("lost_face")]
-        public string LostFace { get; set; }
+        public string lost_face { get; set; }
 
         [JsonProperty("found_face")]
-        public string FoundFace { get; set; }
+        public string found_face { get; set; }
     }
 }
 

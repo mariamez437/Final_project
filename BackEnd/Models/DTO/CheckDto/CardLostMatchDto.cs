@@ -2,12 +2,12 @@
 {
     public class CardLostMatchDto
     {
-        public string Name { get; set; }
-        public string NationalId { get; set; }
-        public string Governorate { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
-        public string Contact { get; set; }
-        public string ImageUrl { get; set; }
+        public string name { get; set; }
+        public string national_id { get; set; }
+        public string governorate { get; set; }
+        public string city { get; set; }
+        public string street { get; set; }
+        public string contact { get; set; }
+        public string image_name { get; set; }
     }
 }

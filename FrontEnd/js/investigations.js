@@ -494,69 +494,36 @@ function showFoundItems(items, lostItem, searchTypeItem) {
   }
 }
 
-const sampleData = [
-  {
-    match_type: "Full Match",
-    matched: 1,
-    final_score: 0.95,
-    text_similarity: 0.92,
-    text_best_match: {
-      governorate: "Cairo",
-      city: "Nasr City",
-      street: "Mostafa El-Nahas Street",
-      contact: "maged@gmail.com",
-      brand: "iPhone",
-      color: "Black",
-      image_url: "https://example.com/image1.jpg",
-    },
-    image_similarity: 0.98,
-    matched_images: [
-      {
-        image_url: "https://example.com/match1.jpg",
-        image_similarity: 0.98,
-        associated_data: {
-          governorate: "Cairo",
-          city: "Nasr City",
-          street: "Mostafa El-Nahas Street",
-          contact: "maged@gmail.com",
-          brand: "iPhone",
-          color: "Black",
-        },
-      },
-      {
-        image_url: "https://example.com/match2.jpg",
-        image_similarity: 0.89,
-        associated_data: {
-          governorate: "Cairo",
-          city: "Nasr City",
-          street: "Aviation Street",
-          contact: "maged@gmail.com",
-          brand: "iPhone",
-          color: "Black",
-        },
-      },
-      {
-        image_url: "https://example.com/match2.jpg",
-        image_similarity: 0.77,
-        associated_data: {
-          governorate: "Cairo",
-          city: "Nasr City",
-          street: "Aviation Street",
-          contact: "maged@gmail.com",
-          brand: "iPhone",
-          color: "Black",
-        },
-      },
-    ],
-  },
-];
+// const sampleData = [
+//   {
+//     match_type: "Both",
+//     matched: 1,
+//     final_score: 0.95,
+//     text_similarity: 0.92,
+//     text_best_match: {
+//       governorate: "Cairo",
+//       city: "Nasr City",
+//       street: "Mostafa El-Nahas Street",
+//       contact: "maged@gmail.com",
+//       brand: "iPhone",
+//       color: "Black",
+//       image_url: "https://example.com/image1.jpg",
+//     },
+//     image_similarity: 0.98,
+//     matched_images: [
+//       {
+//         image_url: "https://example.com/match1.jpg",
+//         image_similarity: 0.98,
+//         associated_data: null,
+//       }
+//     ],
+//   },
+// ];
 
 function hideDivs() {
-  document.getElementById("phoneContainer").innerHTML = "";
+  document.getElementById("results").innerHTML = "";
   formSection.classList.remove("d-flex");
   formSection.classList.add("d-none");
-  document.getElementById("phoneContainer").classList.remove("d-none");
-  document.getElementById("phoneContainer").classList.add("d-flex");
   document.querySelector("#link").classList.remove("d-none");
   document.querySelector("#link").classList.add("d-block");
 }
@@ -617,30 +584,41 @@ function createScoreCard(value, label) {
 function createPhoneDetailsSection(phoneData) {
   if (!phoneData) return null;
 
-  const title = createElement("h3", {}, "Phone Details");
+const title = createElement("h3", {}, "Phone Details");
 
-  const detailsGrid = createElement("div", { className: "details-grid" }, "", [
-    createDetailItem("Governorate:", phoneData.governorate),
-    createDetailItem("City:", phoneData.city),
-    createDetailItem("Street:", phoneData.street),
-    createDetailItem("Contact:", phoneData.contact),
-    createDetailItem("Brand:", phoneData.brand),
-    createDetailItem("Color:", phoneData.color),
-  ]);
+const phoneImage = document.createElement("img");
+phoneImage.src = phoneData.image_url;
+phoneImage.alt = "Phone Image";
+phoneImage.style.maxWidth = "200px"; // تعديل حسب الحجم المطلوب
 
-  return createElement("div", { className: "phone-details" }, "", [
-    title,
-    detailsGrid,
-  ]);
+const detailsGrid = createElement("div", { className: "details-grid" }, "", [
+  createDetailItem("Governorate:", phoneData.governorate),
+  createDetailItem("City:", phoneData.city),
+  createDetailItem("Street:", phoneData.street),
+  createDetailItem("Brand:", phoneData.brand),
+  createDetailItem("Color:", phoneData.color),
+  createDetailItem("Contact:", phoneData.contact),
+]);
+
+// سطر منفصل للصورة
+detailsGrid.appendChild(phoneImage);
+
+return createElement("div", {}, "", [title, detailsGrid]);
 }
 
 // Create image card element
 function createImageCard(imageData) {
+  const phoneImage = document.createElement("img");
+phoneImage.src = imageData.image_url;
+phoneImage.alt = "Phone Image";
+phoneImage.style.maxWidth = "200px"; 
+
+
   const imagePlaceholder = createElement(
     "div",
-    { className: "image-placeholder" },
-    "📸"
+    { className: "image-placeholder" }
   );
+  imagePlaceholder.appendChild(phoneImage);
   const imageSimilarity = createElement(
     "div",
     { className: "image-similarity" },
@@ -649,21 +627,22 @@ function createImageCard(imageData) {
 
   const children = [imagePlaceholder, imageSimilarity];
 
-  if (imageData.associated_data) {
+  if (imageData.associated_data !== null) {
     const detailsGrid = createElement(
       "div",
       { className: "details-grid" },
       "",
       [
+
+        
         createElement("div", { className: "detail-item" }, "", [
-          createElement(
-            "span",
-            { className: "detail-label" },
-            imageData.associated_data.governorate
-          ),
-        ]),
-        createElement("div", { className: "detail-item" }, "", [
-          createElement(
+        createElement(
+          "div",
+            { className: "details-grid" },
+             "Phone Details", 
+        ),
+        
+         createElement(
             "span",
             { className: "detail-label" },
             imageData.associated_data.brand
@@ -673,6 +652,47 @@ function createImageCard(imageData) {
             { className: "detail-value" },
             imageData.associated_data.color
           ),
+
+        ]),
+        createElement("div", { className: "detail-item" }, "", [
+           createElement(
+          "div",
+            { className: "details-grid" },
+              "Found Phone Location"  , 
+        ),
+        
+            createElement(
+            "span",
+            { className: "detail-label" },
+            imageData.associated_data.governorate
+          ), 
+          createElement(
+            "span",
+            { className: "detail-label" },
+            imageData.associated_data.city
+          ),
+            createElement(
+            "span",
+            { className: "detail-label" },
+            imageData.associated_data.street
+          ),
+      
+        ]),
+        createElement("div", { className: "detail-item" }, "", [
+          createElement(
+          "div",
+            { className: "details-grid" },
+          "Contact With Founder"    , 
+        ),
+        
+      
+            createElement(
+            "span",
+            { className: "detail-label" },
+            imageData.associated_data.contact
+          ), 
+        
+
         ]),
       ]
     );

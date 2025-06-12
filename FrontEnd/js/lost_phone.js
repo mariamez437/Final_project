@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     $(".error-msg").text("");
 
-    const PhoneNumber = $("#serial_number").val().trim();
     const Brand = $("#brandID").val();
     const Color = $("#color").val();
     const Government = $("#government").val().trim();
@@ -15,11 +14,7 @@ $(document).ready(function () {
 
     let hasError = false;
 
-    if (!PhoneNumber) {
-      $("#err_serial_number_id").text("Serial Number is required");
-      hasError = true;
-    }
-
+ 
     if (!Brand || Brand === "") {
       $("#err_brandName_id").text("Brand is required");
       hasError = true;
@@ -60,17 +55,15 @@ $(document).ready(function () {
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append("PhoneNumber", PhoneNumber);
       formData.append("Brand", Brand);
       formData.append("Color", Color);
       formData.append("Government", Government);
       formData.append("Center", Center);
       formData.append("Street", Street);
-      formData.append("CardPhoto", fileInput);
+      formData.append("PhonePhoto", fileInput);
       formData.append("ForiegnKey_UserEmail", ForiegnKey_UserEmail);
 
-      const response = await fetch(
-        "http://localhost:5194/api/Lost_Phone/Add_Losted_Phone",
+      const response = await fetch("http://localhost:5194/api/Lost_Phone/Add_Losted_Phone",
         {
           method: "POST",
           body: formData,

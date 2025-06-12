@@ -19,14 +19,14 @@ namespace Lost_and_Found.Controllers
             this.mp = mp;
         }
 
-        [Authorize(Roles = "Manager")]
-        [HttpGet("Get All Losted Phones")]
-        public IActionResult Get()
-        {
-            var lost_Phones = lost_PhoneService.GetLostPhones();
+        //[Authorize(Roles = "Manager")]
+        //[HttpGet("Get All Losted Phones")]
+        //public IActionResult Get()
+        //{
+        //    var lost_Phones = lost_PhoneService.GetLostPhones();
 
-            return Ok(lost_Phones.Select(o => new { PhoneNumber = o.PhoneNumber }).ToList());
-        }
+        //    return Ok(lost_Phones.Select(o => new { PhoneNumber = o.PhoneNumber }).ToList());
+        //}
 
         [Authorize(Roles = "Manager")]
         [HttpGet("Get Losted Phones By Email")]
@@ -41,13 +41,13 @@ namespace Lost_and_Found.Controllers
 
         [Authorize]
         [HttpPost("Add_Losted_Phone")]
-        public IActionResult Post([FromForm] LostPhoneDTO lostPhoneDTO)
+        public async Task<IActionResult> Post([FromForm] LostPhoneDTO lostPhoneDTO)
         {
-            var lostPhone = lost_PhoneService.AddLostPhone(lostPhoneDTO);
+            var lostPhone = await lost_PhoneService.AddLostPhone(lostPhoneDTO);
             if (lostPhone == null)
                 return BadRequest("Phone Number Already Exists or invalid email");
 
-            return Ok($"Added lost phone {lostPhoneDTO.PhoneNumber}");
+            return Ok($"Added lost phone {lostPhone}");
         }
 
         [Authorize(Roles = "Manager")]
@@ -58,7 +58,7 @@ namespace Lost_and_Found.Controllers
             if (lostPhone == null)
                 return BadRequest("Phone Number or email do not Exists");
 
-            return Ok($"Updated lost phone {lostPhoneDTO.PhoneNumber}");
+            return Ok($"Updated lost phone {lostPhoneDTO}");
         }
 
         [Authorize(Roles = "Manager")]

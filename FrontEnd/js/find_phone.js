@@ -59,7 +59,7 @@ $(document).ready(function () {
       formData.append("Government", Government);
       formData.append("Center", Center);
       formData.append("Street", Street);
-      formData.append("fileInput", fileInput);
+      formData.append("PhonePhoto", fileInput);
       formData.append("FinderEmail", FinderEmail);
 
       const response = await fetch(
@@ -148,7 +148,7 @@ window.ShowBootstrapToast = function (
     toastElement
       .querySelector("#btn-go-home")
       .addEventListener("click", function () {
-        window.location.assign("../../index.html");
+        window.location.assign("../../index.html ");
       });
   }
 

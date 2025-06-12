@@ -26,50 +26,74 @@ namespace Lost_and_Found.Services
 
         public async Task<FindPhone> AddFoundedPhone(FindPhoneDTO phone)
         {
-            if (con.FindPhones.FirstOrDefault(o => o.Brand == phone.Brand) != null
-                || con.Users.FirstOrDefault(o => o.Email == phone.FinderEmail) == null)
-                return null;
+            //if (con.FindPhones.FirstOrDefault(o => o.Brand == phone.Brand) != null
+            //    || con.Users.FirstOrDefault(o => o.Email == phone.FinderEmail) == null)
+            //    return null;
+            byte[]? photoBytes = null;
+            if(phone.PhonePhoto != null)
+            {
+                var stream = new MemoryStream();
+                await phone.PhonePhoto.CopyToAsync(stream); 
+                photoBytes = stream.ToArray();
 
-            using var stream = new MemoryStream();
-            phone.PhonePhoto?.CopyTo(stream);
+            }
+
+            string prefix = "findphone";
+            string uniquePart = Guid.NewGuid().ToString("N");
+            string imageName = prefix + uniquePart +".jpg";
 
 
             FindPhone phone1 = new()
-            {
-               
-                PhonePhoto = stream.ToArray(),
+            {  
+                PhonePhoto = photoBytes,
                 Color = phone.Color,
                 Brand = phone.Brand,
                 Street = phone.Street,
                 Government = phone.Government,
                 Center = phone.Center,
-                FinderEmail = phone.FinderEmail
+                FinderEmail = phone.FinderEmail,
+                ImageName = imageName,  
+                
             };
-             con.FindPhones.Add(phone1);
-             con.SaveChanges();
+            try
+            {
+                con.FindPhones.Add(phone1);
+                con.SaveChanges();
+            }
+            catch(Exception ex) {
+
+                Console.WriteLine("Error: " + ex.Message);
+                
+            }
 
             using var httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromMinutes(5);
 
             var form = new MultipartFormDataContent();
+            if (photoBytes != null && photoBytes.Length > 0)
+            {
+                var imageContent = new ByteArrayContent(photoBytes);
+                imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+                // اسم الحقل "image" لازم يطابق اسم الباراميتر في FastAPI
+                form.Add(imageContent, "image", imageName);
+            }
+            form.Add(new StringContent(phone1.Government), "governorate");
+            form.Add(new StringContent(phone1.Center), "city");
+            form.Add(new StringContent(phone1.Street), "street");
+            form.Add(new StringContent(phone1.FinderEmail), "contact");
+            form.Add(new StringContent(phone1.ImageName), "image_name"); 
+            form.Add(new StringContent(phone1.Brand), "brand");
+            form.Add(new StringContent(phone1.Color), "color");
 
-            // الصورة بصيغة byte[] مفروض جاية من phone1.PhonePhoto
-            var imageContent = new ByteArrayContent(phone1.PhonePhoto);
-            imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
 
-            // إضافة الصورة للحقل المطلوب
-            form.Add(imageContent, "image", "photo.jpg");
-
-            // إضافة الإيميل كـ form field
-            form.Add(new StringContent(phone1.FinderEmail), "FounderEmail");
-
-            // تنفيذ الطلب
-            var response = await httpClient.PostAsync("http://localhost:9000/upload/", form);
-
+            var response = await httpClient.PostAsync("http://127.0.0.1:8004/add_found", form);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Status: {response.StatusCode}");
+            Console.WriteLine($"Response: {responseContent}");
             if (!response.IsSuccessStatusCode)
             {
-                var error = await response.Content.ReadAsStringAsync();
-                throw new Exception($"Failed to send image to AI service. Status: {response.StatusCode}, Details: {error}");
-            } 
+                throw new Exception($"Failed to send data to AI service. Status: {response.StatusCode}");
+            }
             return phone1;
         }
 

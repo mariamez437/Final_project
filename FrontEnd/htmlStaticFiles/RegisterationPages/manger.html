@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Page</title>
+    <link rel="shortcut icon" href="../../images/blue.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .section {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            margin-top: 0;
+            color: #3498db;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .results {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            min-height: 50px;
+            background: #f9f9f9;
+        }
+
+        .result-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Manager Page</h1>
+
+        <div class="sections">
+            <!-- Add Manager Section -->
+            <div class="section">
+                <h2>Add Another Manager</h2>
+                <form action="#" method="post" class="add-manager">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="card_id">Card ID</label>
+                        <input type="text" id="card_id" name="card_id" required>
+                    </div>
+                    <button type="submit">Add Manager</button>
+                </form>
+            </div>
+
+            <!-- Lost Cards Section -->
+            <div class="section">
+                <h2>Lost Cards</h2>
+                <form id="get-lost-cards-form" method="get">
+                    <button type="submit">Get All Lost Cards</button>
+                </form>
+                <div class="results">
+                    <div class="result-item">(Results will appear here when submitted)</div>
+                </div>
+            </div>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label style="color:red" for="delete_card_id">Delete Lost Card (Enter ID)</label>
+                    <input type="text" id="delete_card_id" name="delete_card_id" required>
+                </div>
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+
+        <!-- Lost Phones Section -->
+        <div class="section">
+            <h2>Lost Phones</h2>
+            <form action="#" method="get">
+                <button type="submit">Get All Lost Phones</button>
+            </form>
+            <div class="results">
+                <div class="result-item">(Results will appear here when submitted)</div>
+            </div>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label style="color:red" for="delete_phone_id">Delete Lost Phone (Enter ID)</label>
+                    <input type="text" id="delete_phone_id" name="delete_phone_id" required>
+                </div>
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+
+        <!-- Found Phones Section -->
+        <div class="section">
+            <h2>Found Phones</h2>
+            <form action="#" method="get">
+                <button type="submit">Get All Found Phones</button>
+            </form>
+            <div class="results">
+                <div class="result-item">(Results will appear here when submitted)</div>
+            </div>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label style="color:red" for="delete_found_phone_id">Delete Found Phone (Enter ID)</label>
+                    <input type="text" id="delete_found_phone_id" name="delete_found_phone_id" required>
+                </div>
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+
+        <!-- Found Cards Section -->
+        <div class="section">
+            <h2>Found Cards</h2>
+            <form action="#" method="get">
+                <button type="submit">Get All Found Cards</button>
+            </form>
+            <div class="results">
+                <div class="result-item">(Results will appear here when submitted)</div>
+            </div>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label style="color:red" for="delete_found_card_id">Delete Found Card (Enter ID)</label>
+                    <input type="text" id="delete_found_card_id" name="delete_found_card_id" required>
+                </div>
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    <script src="js/manger.js"></script>
+</body>
+
+</html>

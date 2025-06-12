@@ -3,11 +3,7 @@
     public class FindPhone
     {
         public int Id { get; set; }
-
-        public string PhoneNumber { get; set; }
         public string ImageName { get; set; }
-
-
         public string Color { get; set; }
         public string Brand { get; set; }
         public byte[]? PhonePhoto { get; set; }

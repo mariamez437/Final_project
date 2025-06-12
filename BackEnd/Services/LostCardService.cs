@@ -4,6 +4,8 @@ using Lost_and_Found.Models;
 using AutoMapper;
 using Lost_and_Found.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lost_and_Found.Services
 {
@@ -25,21 +27,22 @@ namespace Lost_and_Found.Services
         public List<LostCard> GetLostCardsOfEmail(string email)
         {
             return con.LostCards
-                      .Where(o => o.ForiegnKey_UserEmail == email)
-                      .ToList();
+           .Include(o => o.User)
+           .Where(o => o.ForiegnKey_UserEmail == email)
+           .ToList();
         }
         public async Task<LostCard?> AddLostCard(LostCardsDTO lostCardDTO)
         {
-            if (con.LostCards.Any(o => o.CardID == lostCardDTO.CardID) ||
-                !con.Users.Any(o => o.Email == lostCardDTO.ForiegnKey_UserEmail))
-            {
-                return null;
-            }
+            //if (con.LostCards.Any(o => o.CardID == lostCardDTO.CardID) ||
+            //    !con.Users.Any(o => o.Email == lostCardDTO.ForiegnKey_UserEmail))
+            //{
+            //    return null;
+            //}
 
             byte[]? photoBytes = null;
             if (lostCardDTO.CardPhoto != null)
             {
-                using var stream = new MemoryStream();
+                var stream = new MemoryStream();
                 await lostCardDTO.CardPhoto.CopyToAsync(stream);
                 photoBytes = stream.ToArray();
             }
@@ -58,7 +61,7 @@ namespace Lost_and_Found.Services
                 ImageName = imageName,
                 ForiegnKey_UserEmail = lostCardDTO.ForiegnKey_UserEmail
             };
-
+            //
             con.LostCards.Add(lostCard);
             await con.SaveChangesAsync();
 
@@ -71,8 +74,13 @@ namespace Lost_and_Found.Services
                 imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
                 form.Add(imageContent, "image", imageName);
             }
+            var userEmail = lostCardDTO?.ForiegnKey_UserEmail ?? "";
 
-          //  form.Add(new StringContent(lostCardDTO.Name ?? ""), "name");
+            var UserName = con.Users
+                              .Where(u => u.Email == userEmail)
+                              .Select(u => u.UserName)
+                              .FirstOrDefault() ?? ""; 
+            form.Add(new StringContent(UserName), "name");
             form.Add(new StringContent(lostCardDTO.CardID), "national_id");
             form.Add(new StringContent(lostCardDTO.Government), "governorate");
             form.Add(new StringContent(lostCardDTO.Center), "city");
@@ -80,7 +88,7 @@ namespace Lost_and_Found.Services
             form.Add(new StringContent(lostCardDTO.ForiegnKey_UserEmail ?? ""), "contact");
             form.Add(new StringContent(imageName), "image_name");
 
-            var response = await httpClient.PostAsync("http://localhost:9000/add_lost", form);
+            var response = await httpClient.PostAsync("http://127.0.0.1:8010/add_lost", form);
 
             if (!response.IsSuccessStatusCode)
             {

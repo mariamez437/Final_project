@@ -1,0 +1,87 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    border: 10px;
+    font-family: sans-serif;
+}
+header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(wallpaper.jpg);
+
+    display: inline-block; /*يتم عرض العنصر ككتلة مستقلة على الصفحة ولكنه يحتفظ بالقدرة*/
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+
+
+    position: absolute;
+}
+ul {
+    float: right;
+    min-height: 400px;
+    margin-top: 30px;
+    margin-right: 60px;
+    font-size: 5px;
+    top: 30%;
+}
+ul li {
+    display: inline-block;
+}
+ul li a {
+    text-decoration: none;
+    color: #fff;  /*white*/ 
+    padding: 5px 20px;  /* top botom  right left*/
+    border: 1px solid transparent;
+    transition: 0.5s ease;
+    font-size: 20px;
+    font-family: century;
+}
+
+ul li a:hover {
+    background-color: rgb(238, 238, 101); 
+    color: black;
+}
+
+.team {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.team h1 {
+    color: beige;
+    font-size: 70px;
+    font-family: century;
+}
+.lol {
+    position: fixed;
+    top: 81%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.r {
+    padding: 5px 20px;
+    font-size: 22px;
+}
+.r:hover {
+    background-color: rgb(238, 238, 101); 
+	color: black;
+}
+
+/* Back To Top Button */
+
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#back-to-top:hover {
+    opacity: 1;
+}

@@ -3,7 +3,6 @@
     public class LostPhone
     {
         public int ID { get; set; }
-        public string? PhoneNumber { get; set; }
         public byte[]? PhonePhoto { get; set; }
         public string ImageName { get; set; }       
         public string Color { get; set; }
@@ -15,3 +14,4 @@
         public User User { get; set; }                      // One To Many relation
     }
 }
+

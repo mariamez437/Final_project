@@ -31,10 +31,10 @@ namespace Lost_and_Found.Controllers
             return Ok(ret);
         }
         [Authorize]
-        [HttpPost("Add_Find_Card")] // افصل لوجك  ai خله ف تشكنج
-        public IActionResult Post([FromForm] FindCardDTO findCardDTO)
+        [HttpPost("Add_Find_Card")]
+        public async Task<IActionResult> Post([FromForm] FindCardDTO findCardDTO)
         {
-            var findcard = Find_CardServices.AddFoundedCard(findCardDTO);
+            var findcard = await Find_CardServices.AddFoundedCard(findCardDTO);
             if (findcard == null)
                 return BadRequest("Card Number Already Exists");
 

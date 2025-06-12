@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       // User is not logged in - show Login
       authLink.textContent = "Login";
-      authLink.href = "/htmlStaticFiles/Registeration Pages/login.html";
+      authLink.href = "/htmlStaticFiles/RegisterationPages/login.html";
       authLink.onclick = null;
     }
   }

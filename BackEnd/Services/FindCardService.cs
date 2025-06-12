@@ -10,7 +10,7 @@ namespace Lost_and_Found.Services
 {
     public class FindCardService : IFindCardService
     {
-            private DataConnection con;
+            private readonly DataConnection con;
             private IMapper mp;
             public FindCardService(DataConnection con, IMapper mp)
             {
@@ -25,16 +25,10 @@ namespace Lost_and_Found.Services
 
         public async Task<FindCard?> AddFoundedCard(FindCardDTO card)
         {
-            if (con.FindCards.Any(o => o.CardID == card.CardID) ||
-                !con.Users.Any(o => o.Email == card.FinderEmail))
-            {
-                return null;
-            }
-
             byte[]? photoBytes = null;
             if (card.CardPhoto != null)
             {
-                using var stream = new MemoryStream();
+                var stream = new MemoryStream();
                 await card.CardPhoto.CopyToAsync(stream);
                 photoBytes = stream.ToArray();
             }
@@ -54,41 +48,79 @@ namespace Lost_and_Found.Services
                 ImageName = imageName
             };
 
-            con.FindCards.Add(card1);
-            await con.SaveChangesAsync();
+            try
+            {
+                con.FindCards.Add(card1);
+                await con.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
 
             using var httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromMinutes(5);
+
             var form = new MultipartFormDataContent();
 
-            if (photoBytes != null)
+            // إضافة الصورة إذا كانت موجودة
+            if (photoBytes != null && photoBytes.Length > 0)
             {
                 var imageContent = new ByteArrayContent(photoBytes);
                 imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
                 form.Add(imageContent, "image", imageName);
             }
 
-            form.Add(new StringContent(card1.CardID), "national_id");
-            form.Add(new StringContent(card1.Government), "governorate");
-            form.Add(new StringContent(card1.Center), "city");
-            form.Add(new StringContent(card1.Street), "street");
-            form.Add(new StringContent(card.FinderEmail), "contact");  
+            // إضافة البيانات النصية مع التأكد من عدم وجود قيم null
+            form.Add(new StringContent(card1.FinderEmail ?? "Unknown"), "name");
+            form.Add(new StringContent(card1.CardID ?? ""), "national_id");
+            form.Add(new StringContent(card1.Government ?? ""), "governorate");
+            form.Add(new StringContent(card1.Center ?? ""), "city");
+            form.Add(new StringContent(card1.Street ?? ""), "street");
+            form.Add(new StringContent(card1.FinderEmail ?? ""), "contact");
+            form.Add(new StringContent(card1.ImageName ?? ""), "image_name");
 
-            form.Add(new StringContent(card1.ImageName), "image_name");
-            form.Add(new StringContent(card1.FinderEmail), "name");
-
-           
-
-            var response = await httpClient.PostAsync("http://localhost:9000/add_found", form);
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                var error = await response.Content.ReadAsStringAsync();
-                throw new Exception($"Failed to send data to AI service. Status: {response.StatusCode}, Details: {error}");
+                var response = await httpClient.PostAsync("http://127.0.0.1:8010/add_found", form);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine($"Status: {response.StatusCode}");
+                Console.WriteLine($"Response: {responseContent}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // طباعة تفاصيل أكثر للخطأ
+                    Console.WriteLine($"Request failed with status: {response.StatusCode}");
+                    Console.WriteLine($"Response content: {responseContent}");
+
+                    // محاولة parse الخطأ من FastAPI
+                    try
+                    {
+                        dynamic errorDetails = Newtonsoft.Json.JsonConvert.DeserializeObject(responseContent);
+                        Console.WriteLine($"Error details: {errorDetails}");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Could not parse error response");
+                    }
+
+                    throw new Exception($"Failed to send data to AI service. Status: {response.StatusCode}, Response: {responseContent}");
+                }
+
+                return card1;
             }
-
-            return card1;
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"HTTP Request Error: {httpEx.Message}");
+                throw new Exception($"Network error when calling AI service: {httpEx.Message}");
+            }
+            catch (TaskCanceledException tcEx)
+            {
+                Console.WriteLine($"Request Timeout: {tcEx.Message}");
+                throw new Exception("Request to AI service timed out");
+            }
         }
-
 
         public FindCard UpdateFoundedCard(FindCardDTO card)
         {
@@ -98,7 +130,7 @@ namespace Lost_and_Found.Services
 
             FindCard card1 = con.FindCards.FirstOrDefault(o => o.CardID == card.CardID);
 
-            using var stream = new MemoryStream();
+            var stream = new MemoryStream();
             card.CardPhoto?.CopyTo(stream);
 
             card1.CardPhoto = stream.ToArray();

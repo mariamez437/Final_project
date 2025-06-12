@@ -44,9 +44,9 @@ namespace Lost_and_Found.Controllers
 
         [Authorize]
         [HttpPost("Add_Losted_Card")]
-        public IActionResult Post([FromForm] LostCardsDTO lostCardDTO)
+        public async Task<IActionResult> Post([FromForm] LostCardsDTO lostCardDTO)
         {
-            var lostcard = lost_CardService.AddLostCard(lostCardDTO);
+            var lostcard = await lost_CardService.AddLostCard(lostCardDTO);
             if (lostcard == null)
                 return BadRequest("Card Number Already Exists or invalid email");
 

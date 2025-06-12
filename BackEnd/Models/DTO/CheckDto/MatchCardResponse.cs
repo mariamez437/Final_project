@@ -4,22 +4,23 @@ namespace Lost_and_Found.Models.DTO.CheckDto
 {
     public class MatchCardResponse
     {
+
         [JsonProperty("text_similarity")]
-        public double? TextSimilarity { get; set; }
+        public double? text_similarity { get; set; }
 
         [JsonProperty("face_verified")]
-        public bool FaceVerified { get; set; }
+        public bool? face_verified { get; set; }
 
         [JsonProperty("face_distance")]
-        public double FaceDistance { get; set; }
+        public double? face_distance { get; set; }
 
         [JsonProperty("match_result")]
-        public bool MatchResult { get; set; }
+        public bool match_result { get; set; }
 
         [JsonProperty("face_images")]
-        public FaceImagesDto FaceImages { get; set; }
+        public FaceImagesDto face_images { get; set; }
 
         [JsonProperty("contact_info")]
-        public ContactInfoDto ContactInfo { get; set; }
+        public ContactInfoDto contact_info { get; set; }
     }
 }
